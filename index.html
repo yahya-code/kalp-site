@@ -1,84 +1,97 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Perfect 3D Heart</title>
-<style>
-body{
-    margin:0;
-    background:black;
-    overflow:hidden;
-}
-canvas{display:block;}
-</style>
+    <meta charset="UTF-8">
+    <title>Seni Seviyorum Kalbi</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5));
+        }
+    </style>
 </head>
 <body>
+    <canvas id="heartCanvas"></canvas>
 
-<canvas id="c"></canvas>
+    <script>
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
 
-<script>
-const canvas = document.getElementById("c");
-const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+        const text = "I LOVE YOU";
+        const particles = [];
+        const particleCount = 150; // Metin sayısı
 
-let rot = 0;
-
-function heart(t){
-    return {
-        x: 16*Math.pow(Math.sin(t),3),
-        y: -(13*Math.cos(t)
-            -5*Math.cos(2*t)
-            -2*Math.cos(3*t)
-            -Math.cos(4*t))
-    };
-}
-
-function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    const cx = canvas.width/2;
-    const cy = canvas.height/2;
-
-    for(let depth=0; depth<30; depth++){
-
-        let z = depth - 15;   // merkez derinlik
-
-        for(let t=0; t<Math.PI*2; t+=0.15){
-
-            let p = heart(t);
-
-            // Y ekseni etrafında döndürme (doğru eksen)
-            let x = p.x * Math.cos(rot) + z * Math.sin(rot);
-            let zRot = -p.x * Math.sin(rot) + z * Math.cos(rot);
-
-            let scale = 16 + zRot * 0.6;
-
-            ctx.font = "16px Arial";
-            ctx.fillStyle = "#ff69b4";
-            ctx.shadowColor = "#ff69b4";
-            ctx.shadowBlur = 12;
-
-            ctx.fillText(
-                "I love you",
-                cx + x * scale,
-                cy + p.y * scale
-            );
+        function getHeartPoint(t) {
+            // Matematiksel Kalp Formülü
+            let x = 16 * Math.pow(Math.sin(t), 3);
+            let y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+            return { x: x * 15, y: y * 15 };
         }
-    }
 
-    rot += 0.02;
-    requestAnimationFrame(draw);
-}
+        class Particle {
+            constructor(index) {
+                this.t = index * (Math.PI * 2 / particleCount);
+                this.pos = getHeartPoint(this.t);
+                this.size = Math.random() * 10 + 12;
+                this.speed = Math.random() * 0.02 + 0.005;
+                this.opacity = Math.random();
+            }
 
-draw();
+            draw() {
+                ctx.font = `${this.size}px Arial`;
+                ctx.fillStyle = `rgba(255, 182, 193, ${this.opacity})`; // Pembe tonu
+                ctx.textAlign = "center";
+                
+                // Kalbin merkezini ekranın ortasına alıyoruz
+                const x = canvas.width / 2 + this.pos.x;
+                const y = canvas.height / 2 + this.pos.y;
+                
+                ctx.fillText(text, x, y);
+            }
 
-addEventListener("resize",()=>{
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-});
-</script>
+            update() {
+                this.t += this.speed;
+                this.pos = getHeartPoint(this.t);
+                this.opacity = 0.5 + Math.sin(this.t * 2) * 0.5; // Parlama efekti
+            }
+        }
 
+        function init() {
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle(i));
+            }
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // İz bırakma efekti
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>
