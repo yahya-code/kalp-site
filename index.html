@@ -1,110 +1,135 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İyi ki varsın ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonsuz Sevgi</title>
+    <style>
+        /* Temel Ayarlar */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #050505;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-<style>
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background: radial-gradient(circle at bottom, #020111 0%, #000000 100%);
-  overflow:hidden;
-  font-family: 'Segoe UI', sans-serif;
-  text-align:center;
-}
+        /* Hareketli Arka Plan */
+        .bg-move {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            background: radial-gradient(circle, #1a0a1a 0%, #050505 100%);
+            animation: drift 10s ease-in-out infinite alternate;
+            z-index: -1;
+        }
 
-/* yıldız arka plan */
-body::before{
-  content:"";
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:url("https://www.transparenttextures.com/patterns/stardust.png");
-  opacity:0.4;
-}
+        @keyframes drift {
+            from { transform: scale(1); }
+            to { transform: scale(1.1) translate(-2%, -2%); }
+        }
 
-/* yazı */
-.text{
-  color:#ffb6f9;
-  font-size:clamp(20px,4vw,32px);
-  font-style:italic;
-  margin-bottom:40px;
-  text-shadow:0 0 15px rgba(255,182,249,0.8);
-  z-index:2;
-}
+        /* Ana Konteynır */
+        .main-card {
+            position: relative;
+            text-align: center;
+            padding: 40px;
+            border-radius: 20px;
+            z-index: 10;
+        }
 
-/* gerçek kalp */
-.heart{
-  position:relative;
-  width:min(220px,60vw);
-  height:min(200px,55vw);
-}
+        .text-line1 { color: #ffb3d9; font-size: 1.2rem; margin-bottom: 10px; font-style: italic; }
+        .text-line2 { color: white; font-size: 2.2rem; font-weight: bold; text-shadow: 0 0 15px #00f2ff; }
 
-.heart:before,
-.heart:after{
-  content:"";
-  position:absolute;
-  top:0;
-  width:50%;
-  height:80%;
-  border:6px solid #00eaff;
-  border-bottom:none;
-  border-radius:100px 100px 0 0;
-  box-shadow:0 0 25px #00eaff;
-}
+        /* Neon Kalp */
+        .heart-box {
+            margin: 30px auto;
+            width: 120px;
+            height: 120px;
+        }
 
-.heart:before{
-  left:50%;
-  transform:translateX(-100%) rotate(-45deg);
-  transform-origin:100% 100%;
-}
+        .heart-svg {
+            width: 100%;
+            filter: drop-shadow(0 0 10px #00f2ff);
+        }
 
-.heart:after{
-  left:0;
-  transform:rotate(45deg);
-  transform-origin:0 100%;
-}
+        .path-anim {
+            fill: none;
+            stroke: #00f2ff;
+            stroke-width: 2;
+            stroke-dasharray: 100;
+            animation: dash 3s linear infinite;
+        }
 
-/* alt sivri uç */
-.heart div{
-  position:absolute;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:0;
-  height:0;
-  border-left:110px solid transparent;
-  border-right:110px solid transparent;
-  border-top:120px solid transparent;
-  border-bottom:120px solid transparent;
-}
+        @keyframes dash {
+            to { stroke-dashoffset: 200; }
+        }
 
-/* hafif atma animasyonu */
-.heart{
-  animation: beat 1.6s infinite ease-in-out;
-}
+        /* Şakayıklar (Sağ-Sol Sabit) */
+        .flower {
+            position: absolute;
+            width: 150px;
+            height: auto;
+            opacity: 0.7;
+            filter: hue-rotate(320deg) drop-shadow(0 0 10px #ff66aa);
+            pointer-events: none;
+        }
 
-@keyframes beat{
-  0%,100%{ transform:scale(1);}
-  50%{ transform:scale(1.07);}
-}
+        .left-flower { left: -140px; top: 20%; transform: rotate(-20deg); }
+        .right-flower { right: -140px; bottom: 20%; transform: rotate(20deg); }
 
-</style>
+        /* Müzik Butonu */
+        .music-btn {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00f2ff;
+            color: #00f2ff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .music-btn:hover { background: #00f2ff; color: black; }
+    </style>
 </head>
 <body>
 
-<div class="text">
-Bir gün değil, her gün yanında olmak dileği ile<br>
-<strong>İyi ki varsın ❤️</strong>
-</div>
+    <div class="bg-move"></div>
 
-<div class="heart"></div>
+    <div class="main-card">
+        <img src="https://www.transparentpng.com/download/peony/pink-peony-flower-cut-out-3.png" class="flower left-flower" alt="sol-cicek">
+        <img src="https://www.transparentpng.com/download/peony/pink-peony-flower-cut-out-3.png" class="flower right-flower" alt="sag-cicek">
 
+        <div class="text-line1">Bir gün değil, her gün yanında olmak dileği ile</div>
+        <div class="text-line2">İyi ki varsın ❤️</div>
+
+        <div class="heart-box">
+            <svg viewBox="0 0 32 32" class="heart-svg">
+                <path class="path-anim" d="M16,28.261c0,0-14-7.926-14-17.046c0-9.356,13.159-10.399,14-0.454c0.841-9.945,14-8.902,14,0.454 C30,20.335,16,28.261,16,28.261z"/>
+            </svg>
+        </div>
+
+        <button class="music-btn" onclick="toggleMusic()">🎵 Müziği Başlat/Durdur</button>
+        <audio id="myAudio" loop>
+            <source src="muzik.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        function toggleMusic() {
+            var audio = document.getElementById("myAudio");
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+    </script>
 </body>
 </html>
