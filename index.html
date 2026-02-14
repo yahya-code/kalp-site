@@ -1,110 +1,117 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İyi ki varsın ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonsuz Sevgi</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #050505; /* Derin siyah arka plan */
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
 
-<style>
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background: radial-gradient(circle at bottom, #020111 0%, #000000 100%);
-  overflow:hidden;
-  font-family: 'Segoe UI', sans-serif;
-  text-align:center;
-}
+        /* Hareketli Arka Plan (Yıldız Efekti) */
+        .stars {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            animation: moveStars 100s linear infinite;
+            opacity: 0.5;
+            z-index: 0;
+        }
 
-/* yıldız arka plan */
-body::before{
-  content:"";
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:url("https://www.transparenttextures.com/patterns/stardust.png");
-  opacity:0.4;
-}
+        @keyframes moveStars {
+            from { transform: translate(0, 0); }
+            to { transform: translate(-50%, -50%); }
+        }
 
-/* yazı */
-.text{
-  color:#ffb6f9;
-  font-size:clamp(20px,4vw,32px);
-  font-style:italic;
-  margin-bottom:40px;
-  text-shadow:0 0 15px rgba(255,182,249,0.8);
-  z-index:2;
-}
+        .container {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
 
-/* gerçek kalp */
-.heart{
-  position:relative;
-  width:min(220px,60vw);
-  height:min(200px,55vw);
-}
+        .text-top {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ff99cc;
+            text-shadow: 0 0 10px #ff0077;
+            font-style: italic;
+        }
 
-.heart:before,
-.heart:after{
-  content:"";
-  position:absolute;
-  top:0;
-  width:50%;
-  height:80%;
-  border:6px solid #00eaff;
-  border-bottom:none;
-  border-radius:100px 100px 0 0;
-  box-shadow:0 0 25px #00eaff;
-}
+        .text-main {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #ffffff;
+            text-shadow: 0 0 15px #00f2ff;
+        }
 
-.heart:before{
-  left:50%;
-  transform:translateX(-100%) rotate(-45deg);
-  transform-origin:100% 100%;
-}
+        /* Neon Kalp Çizimi */
+        .heart-svg {
+            width: 150px;
+            filter: drop-shadow(0 0 10px #00f2ff) drop-shadow(0 0 20px #00f2ff);
+        }
 
-.heart:after{
-  left:0;
-  transform:rotate(45deg);
-  transform-origin:0 100%;
-}
+        .heart-path {
+            fill: none;
+            stroke: #00f2ff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawHeart 4s linear infinite;
+        }
 
-/* alt sivri uç */
-.heart div{
-  position:absolute;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:0;
-  height:0;
-  border-left:110px solid transparent;
-  border-right:110px solid transparent;
-  border-top:120px solid transparent;
-  border-bottom:120px solid transparent;
-}
+        @keyframes drawHeart {
+            0% { stroke-dashoffset: 1000; }
+            50% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -1000; }
+        }
 
-/* hafif atma animasyonu */
-.heart{
-  animation: beat 1.6s infinite ease-in-out;
-}
+        /* Müzik Kontrol Paneli (Şık Görünüm) */
+        .audio-player {
+            margin-top: 50px;
+            opacity: 0.3;
+            transition: opacity 0.5s;
+        }
+        .audio-player:hover { opacity: 1; }
 
-@keyframes beat{
-  0%,100%{ transform:scale(1);}
-  50%{ transform:scale(1.07);}
-}
-
-</style>
+    </style>
 </head>
 <body>
 
-<div class="text">
-Bir gün değil, her gün yanında olmak dileği ile<br>
-<strong>İyi ki varsın ❤️</strong>
-</div>
+    <div class="stars"></div>
 
-<div class="heart"></div>
+    <div class="container">
+        <div class="text-top">Bir gün değil, her gün yanında olmak dileği ile</div>
+        <div class="text-main">İyi ki varsın ❤️</div>
 
+        <svg class="heart-svg" viewBox="0 0 32 32">
+            <path class="heart-path" d="M16,28.261c0,0-14-7.926-14-17.046c0-9.356,13.159-10.399,14-0.454c0.841-9.945,14-8.902,14,0.454 C30,20.335,16,28.261,16,28.261z"/>
+        </svg>
+
+        <div class="audio-player">
+            <audio id="bgMusic" controls loop>
+                <source src="muzik.mp3" type="audio/mpeg">
+                Tarayıcınız ses öğesini desteklemiyor.
+            </audio>
+            <p style="font-size: 10px; margin-top: 5px;">(Müziği başlatmak için oynata basınız)</p>
+        </div>
+    </div>
+
+    <script>
+        // İstersen buraya etkileşimli js ekleyebiliriz
+        console.log("Sonsuz sevgi yüklendi...");
+    </script>
 </body>
 </html>
