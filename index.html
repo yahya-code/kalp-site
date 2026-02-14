@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>3D Heart</title>
+<title>Perfect 3D Heart</title>
 <style>
 body{
     margin:0;
@@ -25,7 +25,7 @@ canvas.height = innerHeight;
 
 let rot = 0;
 
-function heartPoint(t){
+function heart(t){
     return {
         x: 16*Math.pow(Math.sin(t),3),
         y: -(13*Math.cos(t)
@@ -41,31 +41,29 @@ function draw(){
     const cx = canvas.width/2;
     const cy = canvas.height/2;
 
-    for(let depth = 0; depth < 25; depth++){   // kalınlık katmanları
-        let z = depth * 0.8;
+    for(let depth=0; depth<30; depth++){
 
-        for(let t=0; t<Math.PI*2; t+=0.18){
+        let z = depth - 15;   // merkez derinlik
 
-            let p = heartPoint(t);
+        for(let t=0; t<Math.PI*2; t+=0.15){
 
-            // 3D dönüş
-            let x = p.x;
-            let y = p.y;
+            let p = heart(t);
 
-            let xr = x*Math.cos(rot) - z*Math.sin(rot);
-            let zr = x*Math.sin(rot) + z*Math.cos(rot);
+            // Y ekseni etrafında döndürme (doğru eksen)
+            let x = p.x * Math.cos(rot) + z * Math.sin(rot);
+            let zRot = -p.x * Math.sin(rot) + z * Math.cos(rot);
 
-            let scale = 14 + zr*0.5; // perspektif
+            let scale = 16 + zRot * 0.6;
 
             ctx.font = "16px Arial";
-            ctx.fillStyle = "rgba(255,105,180,0.85)";
+            ctx.fillStyle = "#ff69b4";
             ctx.shadowColor = "#ff69b4";
-            ctx.shadowBlur = 15;
+            ctx.shadowBlur = 12;
 
             ctx.fillText(
                 "I love you",
-                cx + xr*scale,
-                cy + y*scale
+                cx + x * scale,
+                cy + p.y * scale
             );
         }
     }
@@ -82,4 +80,5 @@ addEventListener("resize",()=>{
 });
 </script>
 
-</bod
+</body>
+</html>
