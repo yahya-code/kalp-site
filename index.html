@@ -1,97 +1,132 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Seni Seviyorum Kalbi</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        canvas {
-            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5));
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Heart Animation</title>
+<style>
+  body{
+    margin:0;
+    background:#f5f5f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+    font-family:Arial;
+  }
+
+  .scene{
+    position:relative;
+    width:600px;
+    height:400px;
+  }
+
+  /* Çöp adam */
+  .stickman{
+    position:absolute;
+    bottom:20px;
+    left:40px;
+    width:60px;
+    animation:appear 1s ease forwards;
+  }
+
+  @keyframes appear{
+    from{opacity:0; transform:translateY(20px)}
+    to{opacity:1;}
+  }
+
+  /* Küçük kalpler */
+  .heart{
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:red;
+    transform:rotate(45deg);
+    opacity:0;
+  }
+
+  .heart:before,
+  .heart:after{
+    content:"";
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:red;
+    border-radius:50%;
+  }
+
+  .heart:before{ top:-10px; left:0; }
+  .heart:after{ left:-10px; top:0; }
+
+  /* büyük kalp oluşumu */
+  .final{
+    animation:form 2s forwards ease;
+  }
+
+  @keyframes form{
+    from{opacity:1;}
+    to{opacity:1;}
+  }
+
+  .text{
+    position:absolute;
+    bottom:40px;
+    width:100%;
+    text-align:center;
+    font-size:40px;
+    color:#ff7b9c;
+    opacity:0;
+    animation:showText 2s forwards;
+    animation-delay:4s;
+  }
+
+  @keyframes showText{
+    to{opacity:1;}
+  }
+
+</style>
 </head>
 <body>
-    <canvas id="heartCanvas"></canvas>
 
-    <script>
-        const canvas = document.getElementById('heartCanvas');
-        const ctx = canvas.getContext('2d');
+<div class="scene">
+  <img class="stickman" src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" width="60">
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+  <div class="text">I Love You</div>
+</div>
 
-        const text = "I LOVE YOU";
-        const particles = [];
-        const particleCount = 150; // Metin sayısı
+<script>
+const scene = document.querySelector(".scene");
 
-        function getHeartPoint(t) {
-            // Matematiksel Kalp Formülü
-            let x = 16 * Math.pow(Math.sin(t), 3);
-            let y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-            return { x: x * 15, y: y * 15 };
-        }
+// büyük kalp koordinatları
+const heartShape = [
+[300,80],[260,60],[220,60],[180,80],[160,120],
+[180,160],[220,200],[260,230],[300,260],
+[340,230],[380,200],[420,160],[440,120],
+[420,80],[380,60],[340,60]
+];
 
-        class Particle {
-            constructor(index) {
-                this.t = index * (Math.PI * 2 / particleCount);
-                this.pos = getHeartPoint(this.t);
-                this.size = Math.random() * 10 + 12;
-                this.speed = Math.random() * 0.02 + 0.005;
-                this.opacity = Math.random();
-            }
+function shootHeart(targetX, targetY, delay){
+  const heart = document.createElement("div");
+  heart.className="heart";
+  scene.appendChild(heart);
 
-            draw() {
-                ctx.font = `${this.size}px Arial`;
-                ctx.fillStyle = `rgba(255, 182, 193, ${this.opacity})`; // Pembe tonu
-                ctx.textAlign = "center";
-                
-                // Kalbin merkezini ekranın ortasına alıyoruz
-                const x = canvas.width / 2 + this.pos.x;
-                const y = canvas.height / 2 + this.pos.y;
-                
-                ctx.fillText(text, x, y);
-            }
+  // başlangıç noktası (çöp adam eli)
+  heart.style.left="90px";
+  heart.style.bottom="80px";
 
-            update() {
-                this.t += this.speed;
-                this.pos = getHeartPoint(this.t);
-                this.opacity = 0.5 + Math.sin(this.t * 2) * 0.5; // Parlama efekti
-            }
-        }
+  setTimeout(()=>{
+    heart.style.transition="all 1.5s ease";
+    heart.style.left=targetX+"px";
+    heart.style.top=targetY+"px";
+    heart.style.opacity=1;
+  }, delay);
+}
 
-        function init() {
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle(i));
-            }
-        }
+// sırayla kalpleri fırlat
+heartShape.forEach((pos,i)=>{
+  shootHeart(pos[0],pos[1], i*150);
+});
+</script>
 
-        function animate() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // İz bırakma efekti
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            requestAnimationFrame(animate);
-        }
-
-        init();
-        animate();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
 </body>
 </html>
