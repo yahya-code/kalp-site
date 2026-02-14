@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sevgilim İçin ❤️</title>
 
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heart {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  background: #ff004c;
+  transform: rotate(-45deg);
+  animation: beat 1s infinite;
+  box-shadow:
+    0 0 20px #ff004c,
+    0 0 40px #ff004c,
+    0 0 60px #ff004c,
+    0 0 80px #ff004c;
+}
+
+.heart:before,
+.heart:after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: #ff004c;
+  border-radius: 50%;
+}
+
+.heart:before { top: -60px; left: 0; }
+.heart:after { left: 60px; top: 0; }
+
+@keyframes beat {
+  0%,100% { transform: rotate(-45deg) scale(1); }
+  50% { transform: rotate(-45deg) scale(1.2); }
+}
+
+.text {
+  position: absolute;
+  top: 65%;
+  color: white;
+  font-size: 28px;
+  font-family: Arial;
+  text-shadow:
+    0 0 10px #ff004c,
+    0 0 20px #ff004c,
+    0 0 40px #ff004c;
+}
+</style>
+</head>
+
+<body>
+
+<div class="heart"></div>
+<div class="text">Seni Seviyorum ❤️</div>
+
+</body>
+</html>
