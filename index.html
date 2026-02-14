@@ -3,71 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sibel ❤️ Yahya</title>
+<title>İyi ki varsın Sibel ❤️ Yahya</title>
 
 <style>
 body {
   margin: 0;
   background: black;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  overflow: hidden;
+  text-align: center;
+  padding: 20px;
 }
 
-/* Üst yazı */
+/* Yazılar */
 .text1 {
-  color: #f7b3ff;
-  font-size: 26px;
+  color: #f6b3ff;
+  font-size: clamp(18px, 4vw, 26px);
   font-style: italic;
-  margin-bottom: 5px;
 }
 
 .text2 {
-  color: #f7b3ff;
-  font-size: 34px;
+  color: #f6b3ff;
+  font-size: clamp(26px, 6vw, 40px);
   font-weight: bold;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
-/* Neon kalp */
+/* Kalp alanı */
+.heart-container {
+  width: 90vw;
+  max-width: 320px;
+}
+
+/* Kalp */
 svg {
-  width: 260px;
-  height: 260px;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 path {
   fill: none;
-  stroke: #6ff;
+  stroke: #00ffff;
   stroke-width: 6;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 10px #00ffff)
-          drop-shadow(0 0 25px #00ffff)
-          drop-shadow(0 0 50px #00ffff);
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: draw 3s ease-in-out infinite;
+
+  filter: drop-shadow(0 0 8px #00ffff)
+          drop-shadow(0 0 18px #00ffff)
+          drop-shadow(0 0 35px #00ffff);
+
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 1500;
+  animation: draw 3s ease forwards;
 }
 
 @keyframes draw {
-  0% { stroke-dashoffset: 1000; }
-  50% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="text1">Bir gün değil, her gün Yanımda Olman Dileğin ile</div>
+<div class="text1">Bir gün değil, her gün yanında olmak dileği ile</div>
 <div class="text2">İyi ki varsın</div>
 
+<div class="heart-container">
 <svg viewBox="0 0 512 512">
   <path d="M256 464s-208-128-208-272c0-80 64-144 144-144 48 0 80 24 104 56 24-32 56-56 104-56 80 0 144 64 144 144 0 144-208 272-208 272z"/>
 </svg>
+</div>
 
 </body>
 </html>
