@@ -3,80 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İyi ki varsın Sibel ❤️ Yahya</title>
+<title>İyi ki varsın ❤️</title>
 
 <style>
 body {
   margin: 0;
-  background: black;
-  min-height: 100vh;
+  background: radial-gradient(circle at center, #020024, #000);
+  overflow: hidden;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  padding: 20px;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* Yıldız parçacıkları */
+.stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  opacity: 0.8;
+  animation: twinkle 4s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%,100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.8); }
 }
 
 /* Yazılar */
 .text1 {
-  color: #f6b3ff;
+  color: #ffc6ff;
   font-size: clamp(18px, 4vw, 26px);
   font-style: italic;
 }
 
 .text2 {
-  color: #f6b3ff;
-  font-size: clamp(26px, 6vw, 40px);
+  color: #ffc6ff;
+  font-size: clamp(28px, 6vw, 44px);
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-/* Kalp alanı */
-.heart-container {
-  width: 90vw;
-  max-width: 320px;
-}
-
 /* Kalp */
-svg {
+.heart {
+  position: relative;
+  width: min(60vw, 260px);
+  height: min(60vw, 260px);
+  transform: rotate(-45deg);
+  background: linear-gradient(45deg, #00ffff, #00aaff);
+  box-shadow:
+    0 0 20px #00ffff,
+    0 0 40px #00ffff,
+    0 0 80px #00ffff;
+  animation: beat 1.2s infinite ease-in-out;
+}
+
+.heart:before,
+.heart:after {
+  content: "";
+  position: absolute;
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  background: inherit;
+  border-radius: 50%;
 }
 
-path {
-  fill: none;
-  stroke: #00ffff;
-  stroke-width: 6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.heart:before { top: -50%; left: 0; }
+.heart:after { left: 50%; top: 0; }
 
-  filter: drop-shadow(0 0 8px #00ffff)
-          drop-shadow(0 0 18px #00ffff)
-          drop-shadow(0 0 35px #00ffff);
-
-  stroke-dasharray: 1500;
-  stroke-dashoffset: 1500;
-  animation: draw 3s ease forwards;
-}
-
-@keyframes draw {
-  to { stroke-dashoffset: 0; }
+@keyframes beat {
+  0%,100% { transform: rotate(-45deg) scale(1); }
+  50% { transform: rotate(-45deg) scale(1.12); }
 }
 </style>
 </head>
 
 <body>
 
+<div class="stars"></div>
+
 <div class="text1">Bir gün değil, her gün yanında olmak dileği ile</div>
 <div class="text2">İyi ki varsın</div>
 
-<div class="heart-container">
-<svg viewBox="0 0 512 512">
-  <path d="M256 464s-208-128-208-272c0-80 64-144 144-144 48 0 80 24 104 56 24-32 56-56 104-56 80 0 144 64 144 144 0 144-208 272-208 272z"/>
-</svg>
-</div>
+<div class="heart"></div>
+
+<script>
+// yıldız üretme
+const starsContainer = document.querySelector('.stars');
+
+for (let i = 0; i < 80; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.top = Math.random() * 100 + '%';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.animationDelay = Math.random() * 4 + 's';
+  starsContainer.appendChild(star);
+}
+</script>
 
 </body>
 </html>
