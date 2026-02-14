@@ -3,68 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sevgilim İçin ❤️</title>
+<title>Sibel ❤️ Yahya</title>
 
 <style>
 body {
   margin: 0;
-  height: 100vh;
   background: black;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.heart {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  background: #ff004c;
-  transform: rotate(-45deg);
-  animation: beat 1s infinite;
-  box-shadow:
-    0 0 20px #ff004c,
-    0 0 40px #ff004c,
-    0 0 60px #ff004c,
-    0 0 80px #ff004c;
+/* Üst yazı */
+.text1 {
+  color: #f7b3ff;
+  font-size: 26px;
+  font-style: italic;
+  margin-bottom: 5px;
 }
 
-.heart:before,
-.heart:after {
-  content: "";
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  background: #ff004c;
-  border-radius: 50%;
+.text2 {
+  color: #f7b3ff;
+  font-size: 34px;
+  font-weight: bold;
+  margin-bottom: 40px;
 }
 
-.heart:before { top: -60px; left: 0; }
-.heart:after { left: 60px; top: 0; }
-
-@keyframes beat {
-  0%,100% { transform: rotate(-45deg) scale(1); }
-  50% { transform: rotate(-45deg) scale(1.2); }
+/* Neon kalp */
+svg {
+  width: 260px;
+  height: 260px;
 }
 
-.text {
-  position: absolute;
-  top: 65%;
-  color: white;
-  font-size: 28px;
-  font-family: Arial;
-  text-shadow:
-    0 0 10px #ff004c,
-    0 0 20px #ff004c,
-    0 0 40px #ff004c;
+path {
+  fill: none;
+  stroke: #6ff;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 10px #00ffff)
+          drop-shadow(0 0 25px #00ffff)
+          drop-shadow(0 0 50px #00ffff);
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 3s ease-in-out infinite;
+}
+
+@keyframes draw {
+  0% { stroke-dashoffset: 1000; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 1000; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="heart"></div>
-<div class="text">Seni Seviyorum ❤️</div>
+<div class="text1">Bir gün değil, her gün Yanımda Olman Dileğin ile</div>
+<div class="text2">İyi ki varsın</div>
+
+<svg viewBox="0 0 512 512">
+  <path d="M256 464s-208-128-208-272c0-80 64-144 144-144 48 0 80 24 104 56 24-32 56-56 104-56 80 0 144 64 144 144 0 144-208 272-208 272z"/>
+</svg>
 
 </body>
 </html>
