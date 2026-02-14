@@ -1,135 +1,73 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sonsuz Sevgi</title>
-    <style>
-        /* Temel Ayarlar */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #050505;
-            color: white;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Hareketli Arka Plan */
-        .bg-move {
-            position: absolute;
-            width: 110%;
-            height: 110%;
-            background: radial-gradient(circle, #1a0a1a 0%, #050505 100%);
-            animation: drift 10s ease-in-out infinite alternate;
-            z-index: -1;
-        }
-
-        @keyframes drift {
-            from { transform: scale(1); }
-            to { transform: scale(1.1) translate(-2%, -2%); }
-        }
-
-        /* Ana Konteynır */
-        .main-card {
-            position: relative;
-            text-align: center;
-            padding: 40px;
-            border-radius: 20px;
-            z-index: 10;
-        }
-
-        .text-line1 { color: #ffb3d9; font-size: 1.2rem; margin-bottom: 10px; font-style: italic; }
-        .text-line2 { color: white; font-size: 2.2rem; font-weight: bold; text-shadow: 0 0 15px #00f2ff; }
-
-        /* Neon Kalp */
-        .heart-box {
-            margin: 30px auto;
-            width: 120px;
-            height: 120px;
-        }
-
-        .heart-svg {
-            width: 100%;
-            filter: drop-shadow(0 0 10px #00f2ff);
-        }
-
-        .path-anim {
-            fill: none;
-            stroke: #00f2ff;
-            stroke-width: 2;
-            stroke-dasharray: 100;
-            animation: dash 3s linear infinite;
-        }
-
-        @keyframes dash {
-            to { stroke-dashoffset: 200; }
-        }
-
-        /* Şakayıklar (Sağ-Sol Sabit) */
-        .flower {
-            position: absolute;
-            width: 150px;
-            height: auto;
-            opacity: 0.7;
-            filter: hue-rotate(320deg) drop-shadow(0 0 10px #ff66aa);
-            pointer-events: none;
-        }
-
-        .left-flower { left: -140px; top: 20%; transform: rotate(-20deg); }
-        .right-flower { right: -140px; bottom: 20%; transform: rotate(20deg); }
-
-        /* Müzik Butonu */
-        .music-btn {
-            margin-top: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #00f2ff;
-            color: #00f2ff;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .music-btn:hover { background: #00f2ff; color: black; }
-    </style>
+<meta charset="UTF-8">
+<title>I Love You Heart</title>
+<style>
+    body{
+        margin:0;
+        background:black;
+        overflow:hidden;
+    }
+    canvas{
+        display:block;
+    }
+</style>
 </head>
 <body>
 
-    <div class="bg-move"></div>
+<canvas id="heartCanvas"></canvas>
 
-    <div class="main-card">
-        <img src="https://www.transparentpng.com/download/peony/pink-peony-flower-cut-out-3.png" class="flower left-flower" alt="sol-cicek">
-        <img src="https://www.transparentpng.com/download/peony/pink-peony-flower-cut-out-3.png" class="flower right-flower" alt="sag-cicek">
+<script>
+const canvas = document.getElementById("heartCanvas");
+const ctx = canvas.getContext("2d");
 
-        <div class="text-line1">Bir gün değil, her gün yanında olmak dileği ile</div>
-        <div class="text-line2">İyi ki varsın ❤️</div>
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-        <div class="heart-box">
-            <svg viewBox="0 0 32 32" class="heart-svg">
-                <path class="path-anim" d="M16,28.261c0,0-14-7.926-14-17.046c0-9.356,13.159-10.399,14-0.454c0.841-9.945,14-8.902,14,0.454 C30,20.335,16,28.261,16,28.261z"/>
-            </svg>
-        </div>
+let angle = 0;
 
-        <button class="music-btn" onclick="toggleMusic()">🎵 Müziği Başlat/Durdur</button>
-        <audio id="myAudio" loop>
-            <source src="muzik.mp3" type="audio/mpeg">
-        </audio>
-    </div>
+function drawHeartText() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    <script>
-        function toggleMusic() {
-            var audio = document.getElementById("myAudio");
-            if (audio.paused) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
-        }
-    </script>
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+
+    ctx.fillStyle = "#ff69b4";
+    ctx.font = "16px Arial";
+
+    angle += 0.02;
+
+    for (let t = 0; t < Math.PI * 2; t += 0.15) {
+
+        // Kalp formülü
+        let x = 16 * Math.pow(Math.sin(t), 3);
+        let y = -(13 * Math.cos(t)
+                - 5 * Math.cos(2 * t)
+                - 2 * Math.cos(3 * t)
+                - Math.cos(4 * t));
+
+        // döndürme efekti
+        let rotX = x * Math.cos(angle) - y * Math.sin(angle);
+        let rotY = x * Math.sin(angle) + y * Math.cos(angle);
+
+        ctx.fillText(
+            "I love you",
+            centerX + rotX * 15,
+            centerY + rotY * 15
+        );
+    }
+
+    requestAnimationFrame(drawHeartText);
+}
+
+drawHeartText();
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
 </body>
 </html>
